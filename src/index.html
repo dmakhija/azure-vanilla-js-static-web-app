@@ -9,8 +9,38 @@
 
   <body>
     <main>
-      <h1>Vanilla JavaScript - Azure Static Web App</h1>
+      <h3>Vanilla JavaScript - Azure Static Web App</h3>
       <p>My first static web app</p>
+      <p>Provide your name to load the message from API.</p>
+      <p><b id="name"></b></p>
+      <input
+        id="username"
+        name="username"
+        placeholder="Enter you name..."
+        type="text"
+        maxlength="100"
+      />
+      <button type="submit" onclick="GetWelcomeMessage();">Enter</button>
     </main>
+
+    <script>
+      // (async function () {
+      //   const response = await fetch("/api/message");
+      //   const body = await response.text();
+      //   console.log(body);
+      //   document.querySelector("#name").textContent = body;
+      // })();
+
+      const GetWelcomeMessage = (function () {
+        return async function () {
+          const user = document.getElementById("username").value.trim();
+          const url = `api/message?name=${user}`;
+          const response = await fetch(url);
+          const body = await response.text();
+          document.querySelector("#name").textContent = body;
+          document.getElementById("username").value = "";
+        };
+      })();
+    </script>
   </body>
 </html>
